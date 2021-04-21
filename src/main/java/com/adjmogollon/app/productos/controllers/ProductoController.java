@@ -15,30 +15,37 @@ import com.adjmogollon.app.productos.models.service.IProductoService;
 
 @RestController
 public class ProductoController {
-	
+
 	@Autowired
-	//private Environment env;
-	
+	// private Environment env;
+
 	@Value("${server.port}")
 	private Integer port;
-	
+
 	@Autowired
 	private IProductoService productoService;
-	
+
 	@GetMapping("/listar")
-	public List<Producto> listar(){
-		return productoService.findAll().stream().map(producto ->{
-			//producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+	public List<Producto> listar() {
+		return productoService.findAll().stream().map(producto -> {
+			// producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
 			producto.setPort(port);
 			return producto;
 		}).collect(Collectors.toList());
 	}
-	
+
 	@GetMapping("/ver/{id}")
 	public Producto detalle(@PathVariable Long id) {
 		Producto producto = productoService.findById(id);
-		//producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+		// producto.setPort(Integer.parseInt(env.getProperty("local.server.port")));
 		producto.setPort(port);
+		/*
+		try {
+			Thread.sleep(2000L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		 */
 		return producto;
 	}
 
